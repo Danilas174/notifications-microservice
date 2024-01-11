@@ -1,18 +1,16 @@
+// server.js
 import express from 'express';
 import http from 'http';
-import WebSocket from 'ws';
+import startWSS from './wss';
 import dotenv from 'dotenv';
 
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-const port = process.env.PORT || 9008;
+const port = process.env.PORT;
 
-wss.on('connection', (ws: WebSocket) => {
-  console.log(`Пользователь подключен`);
-  console.log(ws);
-});
+// Запуск WebSocket сервера
+startWSS(server);
 
 server.listen(port, () => {
   console.log(`Server started on port ${port}`);
