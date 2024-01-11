@@ -1,9 +1,15 @@
 // websocketServer.js
 import { Server } from 'http';
 import WebSocket from 'ws';
+import { IConnection, IUser, IUserMap } from './interface/wss.interface';
 
 function startWSS(server: Server) {
   const wss = new WebSocket.Server({ server });
+
+  const connections: IConnection = {
+    users: new Map<number, IUser>(),
+    events: new Map<string, IUserMap>(),
+  };
 
   wss.on('connection', (ws) => {
     console.log(`Пользователь подключен`);
