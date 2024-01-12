@@ -5,7 +5,8 @@ import {
   ISubscribeMessage,
   IUser,
   IUserMap,
-} from './interface/wss.interface';
+} from '../interface/wss.interface';
+import CheckProtocol from '@/protocol/protocol';
 
 //Текущие соединения
 const connections: IConnection = {
@@ -18,6 +19,12 @@ function startWSS(server: Server) {
   const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws: WebSocket) => {
+    const access = CheckProtocol(ws.protocol);
+    if (!access) {
+      ws.close(1008, 'Invalid token');
+      return;
+    }
+
     ws.on('message', (message: Buffer) => {
       try {
         const data: ISubscribeMessage = JSON.parse(message.toString());
@@ -41,16 +48,15 @@ function startWSS(server: Server) {
 }
 
 function subscribe(user_id: number, event_name: string, ws: WebSocket) {
-  let user = connections.users.get(user_id);
+  const user = connections.users.get(user_id);
 
   if (user) {
     user.events.add(event_name);
   } else {
-    user = {
+    connections.users.set(user_id, {
       ws,
       events: new Set([event_name]),
-    };
-    connections.users.set(user_id, user);
+    });
   }
 }
 
