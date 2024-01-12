@@ -1,21 +1,22 @@
+import WebSocket from 'ws';
 export interface IConnection {
   users: Map<number, IUser>;
   events: Map<string, IUserMap>;
 }
 
 export interface IUser {
-  connection_id: number;
-  events: string[];
+  ws: WebSocket;
+  events: Set<string>;
 }
 
 export interface IUserMap {
   [user_id: number]: {
-    connection_id: number;
+    ws: WebSocket;
   };
 }
 
 export interface ISubscribeMessage {
-  type: 'subscribe';
+  type: boolean;
   user_id: number;
   event_name: string;
 }
