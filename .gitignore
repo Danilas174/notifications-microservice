@@ -1,2 +1,21 @@
-/node_modules
-/.env.example
+# Dependency directories
+node_modules/
+
+# User-specific files
+npm-debug.log
+yarn-error.log
+
+# Environments
+.env
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Build output
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
