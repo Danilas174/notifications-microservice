@@ -13,3 +13,9 @@ export interface IUserMap {
     connection_id: number;
   };
 }
+
+export interface ISubscribeMessage {
+  type: 'subscribe';
+  user_id: number;
+  event_name: string;
+}
