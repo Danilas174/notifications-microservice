@@ -19,7 +19,7 @@ function startWSS(server: Server) {
   const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws: WebSocket) => {
-    ws.on('message', (message) => {
+    ws.on('message', (message: Buffer) => {
       try {
         const data: ISubscribeMessage = JSON.parse(message.toString());
 
