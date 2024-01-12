@@ -6,7 +6,7 @@ npm-debug.log
 yarn-error.log
 
 # Environments
-.env
+/.env
 
 # IDEs and editors
 .vscode/
