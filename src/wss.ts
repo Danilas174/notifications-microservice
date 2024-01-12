@@ -34,6 +34,7 @@ function startWSS(server: Server) {
     });
 
     ws.on('close', () => {
+      ws.close();
       console.log('Соединение закрыто');
     });
   });
@@ -68,7 +69,7 @@ function close(user_id: number) {
   const user = connections.users.get(user_id);
 
   if (user && user.events.size === 0) {
-    user.ws.terminate();
+    user.ws.close();
     connections.users.delete(user_id);
   }
 }
