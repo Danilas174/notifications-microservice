@@ -6,7 +6,7 @@ import {
   IUser,
   IUserMap,
 } from '../interface/wss.interface';
-import CheckProtocol from '@/protocol/protocol';
+import CheckProtocol from '../protocol/protocol';
 
 //Текущие соединения
 const connections: IConnection = {
