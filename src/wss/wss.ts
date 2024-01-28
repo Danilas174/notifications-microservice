@@ -6,10 +6,10 @@ import {
   IUser,
   IUserMap,
 } from '../interface/wss.interface';
-import CheckProtocol from '../protocol/protocol';
+import CheckProtocol from '../checking/protocol';
 
 //Текущие соединения
-const connections: IConnection = {
+export const connections: IConnection = {
   users: new Map<number, IUser>(),
   events: new Map<string, IUserMap>(),
 };
@@ -19,6 +19,7 @@ function startWSS(server: Server) {
   const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws: WebSocket) => {
+    //Проверяем доступ по токену
     const access = CheckProtocol(ws.protocol);
     if (!access) {
       ws.close(1008, 'Invalid token');
@@ -47,6 +48,7 @@ function startWSS(server: Server) {
   });
 }
 
+//Подписка на событие
 function subscribe(user_id: number, event_name: string, ws: WebSocket) {
   const user = connections.users.get(user_id);
 
@@ -60,6 +62,7 @@ function subscribe(user_id: number, event_name: string, ws: WebSocket) {
   }
 }
 
+//Отписка от события
 function unsubscribe(user_id: number, event_name: string) {
   const user = connections.users.get(user_id);
 
@@ -71,6 +74,7 @@ function unsubscribe(user_id: number, event_name: string) {
   }
 }
 
+//Закрытие соединения
 function close(user_id: number) {
   const user = connections.users.get(user_id);
 

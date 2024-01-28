@@ -16,7 +16,7 @@ export interface IUserMap {
 }
 
 export interface ISubscribeMessage {
-  type: boolean;
+  type: string;
   user_id: number;
   event_name: string;
 }
