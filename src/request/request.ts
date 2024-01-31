@@ -11,6 +11,7 @@ postHandler.post('/notify', (req, res) => {
   const userConnection = connections.users.get(user_id);
 
   if (userConnection) {
+    //Отправляем сообщение пользователю
     userConnection.ws.send(JSON.stringify({ event: event_name, message }));
     res.send('Message sent successfully');
   } else {
